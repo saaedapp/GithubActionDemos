@@ -35,6 +35,7 @@ jobs:
             p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
             p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
             mobileprovision-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+            code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
             team-id: 2WUMZJWXX8
       
       
