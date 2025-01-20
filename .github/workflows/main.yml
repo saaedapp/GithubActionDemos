@@ -22,7 +22,16 @@ jobs:
       - name: List available simulators
         run: xcrun simctl list devices
    
-
-      
+      - name: Build Cleanup
+        run: |
+          xcodebuild clean -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject | xcpretty
+          
+      - name: Build and archive iOS app
+        run: |
+         xcodebuild clean archive \
+         -scheme "GithubActionsDemoProject" \  # Your project scheme
+         -configuration Release \  # Archive configuration
+         -archivePath $PWD/build/GithubActionsDemoProject.xcarchive \  # Archive location
+         -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.1'
       
       
