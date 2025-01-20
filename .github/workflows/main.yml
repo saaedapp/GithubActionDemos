@@ -25,6 +25,12 @@ jobs:
       - name: Build Cleanup
         run: |
           xcodebuild clean -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject | xcpretty
+      - name: Set up Code Signing
+        uses: apple-actions/setup-certificates@v2
+        with:
+          p12-cert-path: ${{ secrets.P12_CER_BASE64 }}
+          p12-cert-password: ${{ secrets.P12_KEY_BASE64 }}
+          provisioning-profile-path: ${{ secrets.MOBILEPROVISION_BASE64 }}
           
       - name: Build and archive iOS app
         run: |
