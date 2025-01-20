@@ -1,8 +1,28 @@
-name: hello-world
-on: push
+name: iOS Build
+
+on:
+  push:
+    branches: [ "main" ] # Trigger the workflow on pushes to the "main" branch
+
 jobs:
-  my-job:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: macOS-latest 
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd ios
+          pod install
+
+      - name: Build the app
+        run: |
+          cd ios
+          xcodebuild archive -scheme <your-scheme-name> -archivePath "build/archives/<your-scheme-name>.xcarchive" -destination "generic/platform=iOS" -configuration Release
+
+      - name: Upload the IPA file
+        uses: actions/upload-artifact@v3
+        with:
+          name: iOS App
+          path: build/archives/<your-scheme-name>.xcarchive
