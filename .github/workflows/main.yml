@@ -29,7 +29,6 @@ jobs:
         uses: yukiarrr/ios-build-action@v1.5.0  
         with:
             project-path: GithubActionsDemoProject.xcodeproj
-            workspace-path: GithubActionsDemoProject.xcworkspace # optional
             scheme: GithubActionsDemoProject
             configuration: Release
             export-method: app-store
