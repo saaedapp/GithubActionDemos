@@ -30,7 +30,7 @@ jobs:
        
       - name: Build and Archive
         run: |
-            xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="Apple Development: Nour Shawky (3DY6A2932H)" PROVISIONING_PROFILE="fa78e209-805e-48b2-b74d-bdc8fd7c8fe3"
+            xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="2WUMZJWXX8" PROVISIONING_PROFILE="fa78e209-805e-48b2-b74d-bdc8fd7c8fe3"
   
       - name: Export IPA
         run: |
