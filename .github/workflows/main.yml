@@ -30,7 +30,7 @@ jobs:
        
       - name: Build and Archive
         run: |
-            xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="3DY6A2932H" PROVISIONING_PROFILE="be7a475c-3050-4cd5-be43-80d537df6d3a"
+            xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="3DY6A2932H" PROVISIONING_PROFILE="${ secrets.PROVISIONING_PROFILE_BASE64 }"
   
       - name: Export IPA
         run: |
