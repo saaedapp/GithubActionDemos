@@ -28,7 +28,7 @@ jobs:
           
       - name: Build and archive iOS app
         run: |
-         xcodebuild clean archive \
+         xcodebuild -project "GithubActionsDemoProject.xcodeproj" \
          -scheme "GithubActionsDemoProject" \  # Your project scheme
          -configuration Release \  # Archive configuration
          -archivePath $PWD/build/GithubActionsDemoProject.xcarchive \  # Archive location
