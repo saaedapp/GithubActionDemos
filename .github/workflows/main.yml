@@ -26,7 +26,7 @@ jobs:
           
       - name: Build Test
         run: |
-          xcodebuild test -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -destination 'platform=iOS   Simulator,name=iPhone 15,OS=17.5' | xcpretty -s
+          xcodebuild test -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -destination 'generic/platform=iOS' | xcpretty -s
        
       - name: Build and Archive
         run: |
