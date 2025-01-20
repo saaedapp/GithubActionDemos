@@ -30,6 +30,11 @@ jobs:
        
       - name: Build and Archive
         run: |
+            cd work/GithubActionDemos
             xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="3DY6A2932H" PROVISIONING_PROFILE="be7a475c-3050-4cd5-be43-80d537df6d3a"
   
-   
+      - name: Export IPA
+        run: |
+            cd work/GithubActionDemos
+            xcodebuild -exportArchive -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -exportPath "build/ipa" -exportOptionsPlist "exportOptions.plist"
+  
