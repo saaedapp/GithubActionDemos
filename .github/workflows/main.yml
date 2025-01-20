@@ -37,9 +37,9 @@ jobs:
             mobileprovision-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
             code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
             team-id: 2WUMZJWXX8
-            
+
       - name: Saving IPA File
-        uses: actions/upload-artifact@v2   
+        uses: actions/upload-artifact@v3  
         with:
             name: ipa
             path: ./**.ipa
