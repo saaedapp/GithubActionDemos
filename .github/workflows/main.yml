@@ -1,28 +1,30 @@
-name: iOS Build
+name: GitHub Action 
 
-on:
+on: 
   push:
-    branches: [ "main" ] # Trigger the workflow on pushes to the "main" branch
+    branches:    
+      - main
 
 jobs:
-  build:
-    runs-on: macOS-latest 
+  deploy:
+    name: GitHub Pipeline
+    runs-on: macos-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Selecting Xcode Version
+        run: sudo xcode-select -switch /Applications/Xcode_14.2.app
+        
+      - name: Running Xcode version Is?
+        run: /usr/bin/xcodebuild -version
+   
+      - name: Build Cleanup
         run: |
-          cd ios
-          pod install
-
-      - name: Build the app
+          xcodebuild clean -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject | xcpretty
+          
+      - name: Build Test
         run: |
-          cd ios
-          xcodebuild archive -scheme <your-scheme-name> -archivePath "build/archives/<your-scheme-name>.xcarchive" -destination "generic/platform=iOS" -configuration Release
-
-      - name: Upload the IPA file
-        uses: actions/upload-artifact@v3
-        with:
-          name: iOS App
-          path: build/archives/<your-scheme-name>.xcarchive
+          xcodebuild test -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -destination 'platform=iOS   Simulator,name=iPhone 14,OS=16.2' | xcpretty -s
+       
