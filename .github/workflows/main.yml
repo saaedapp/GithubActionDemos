@@ -34,11 +34,21 @@ jobs:
         run: |
           xcodebuild test -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -destination 'generic/platform=iOS' | xcpretty -s
        
-      - name: Build and Archive
-        run: |
-            xcodebuild archive -scheme GithubActionsDemoProject -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -destination "generic/platform=iOS" -configuration Release CODE_SIGN_IDENTITY="2WUMZJWXX8" PROVISIONING_PROFILE="$BUILD_PROVISION_PROFILE_BASE64"
-  
-      - name: Export IPA
-        run: |
-            xcodebuild -exportArchive -archivePath "build/archives/GithubActionsDemoProject.xcarchive" -exportPath "build/ipa" -exportOptionsPlist "exportOptions.plist"
-  
+          - name: Build Archive
+          uses: yukiarrr/ios-build-action@v1.5.0  
+          with:
+            project-path: GithubActionsDemoProject.xcodeproj
+            workspace-path: GithubActionsDemoProject.xcworkspace # optional
+            scheme: GithubActionsDemoProject
+            configuration: Release
+            export-method: app-store
+            mobileprovision-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+            team-id: 2WUMZJWXX8
+      
+      - name: Saving IPA File
+        uses: actions/upload-artifact@v2   
+        with:
+            name: ipa
+            path: ./**.ipa
+            
+      
