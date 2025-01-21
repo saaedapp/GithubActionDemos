@@ -23,23 +23,18 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
 
-      - name: Configure App Store Connect
-        env:
-          APP_STORE_CONNECT_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-        run: |
-          echo "Setting up App Store Connect API key..."
-
-
-  
-      # Step 5: Build the app with automatic signing
-      - name: Build
-        run: |
-          xcodebuild clean build \
-          -project GithubActionsDemoProject.xcodeproj \
-          -scheme GithubActionsDemoProject \
-          -sdk iphoneos \
-          -configuration Release \
-          -allowProvisioningUpdates
+      - name: Build Archive
+        uses: yukiarrr/ios-build-action@v1.5.0  
+        with:
+          project-path: GithubActionsDemoProject.xcodeproj
+          workspace-path: GithubActionsDemoProject.xcworkspace # optional
+          scheme: GithubActionsDemoProject
+          configuration: Release
+          export-method: app-store
+          p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+          p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+          mobileprovision-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
 
     #end jobs
