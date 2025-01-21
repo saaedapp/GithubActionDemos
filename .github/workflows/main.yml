@@ -23,17 +23,12 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
 
-      - name: Install the Apple certificate and provisioning profile
+      - name: Configure App Store Connect
         env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.P12_CER_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_KEY_BASE64 }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          APP_STORE_CONNECT_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo "Setting up App Store Connect API key..."
 
 
   
@@ -44,6 +39,7 @@ jobs:
           -project GithubActionsDemoProject.xcodeproj \
           -scheme GithubActionsDemoProject \
           -sdk iphoneos \
-          -configuration Release 
+          -configuration Release \
+          -allowProvisioningUpdates
 
     #end jobs
