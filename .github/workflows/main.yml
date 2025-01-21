@@ -32,8 +32,12 @@ jobs:
 
 
   
-      # Build the project
+      # Step 5: Build the app with automatic signing
       - name: Build
-        run: xcodebuild -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' clean build
-
-  
+        run: |
+          xcodebuild clean build \
+          -project GithubActionsDemoProject.xcodeproj \
+          -scheme GithubActionsDemoProject \
+          -sdk iphoneos \
+          -configuration Release \
+          -allowProvisioningUpdates
