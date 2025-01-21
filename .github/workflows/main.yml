@@ -22,6 +22,15 @@ jobs:
       - name: Set up Xcode
         run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
+
+      - name: Configure App Store Connect
+        env:
+          APP_STORE_CONNECT_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          echo "Setting up App Store Connect API key..."
+
+
   
       # Build the project
       - name: Build
