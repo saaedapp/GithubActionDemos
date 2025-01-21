@@ -20,7 +20,7 @@ jobs:
 
       # Set up Xcode
       - name: Set up Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_16.2.app
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
   
       # Build the project
