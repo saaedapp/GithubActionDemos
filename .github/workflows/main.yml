@@ -1,43 +1,34 @@
-name: GitHub Action Demo
+# .github/workflows/ci.yml
+name: iOS CI/CD
 
-on: 
+on:
   push:
-    branches:    
-      - main
+    branches:
+      - main # Trigger on push to main branch (or any branch you prefer)
+  pull_request:
+    branches:
+      - main # Trigger on pull requests to the main branch
 
 jobs:
-  deploy:
-    name: GitHub Pipeline
-    runs-on: macos-latest
+  build:
+    runs-on: macos-latest # This specifies that the job should run on a macOS runner
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        
-      - name: Selecting Xcode Version
-        run: sudo xcode-select -switch /Applications/Xcode_16.2.app
-        
-      - name: Running Xcode version Is?
-        run: /usr/bin/xcodebuild -version
-      - name: List available simulators
-        run: xcrun simctl list devices
-   
-      - name: Build Cleanup
-        run: |
-          xcodebuild clean -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject | xcpretty
-      - name: Set up Code Signing
-        uses: apple-actions/setup-certificates@v2
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Xcode
+      - name: Set up Xcode
+        uses: maxheld83/setup-xcode@v1
         with:
-          p12-cert-path: ${{ secrets.P12_CER_BASE64 }}
-          p12-cert-password: ${{ secrets.P12_KEY_BASE64 }}
-          provisioning-profile-path: ${{ secrets.MOBILEPROVISION_BASE64 }}
-          
-      - name: Build and archive iOS app
+          xcode-version: '14.1' # Specify the desired version of Xcode
+
+     
+
+      # Step 4: Build the app
+      - name: Build the app
         run: |
-         xcodebuild -project "GithubActionsDemoProject.xcodeproj" \
-         -scheme "GithubActionsDemoProject" \  # Your project scheme
-         -configuration Release build CODE_SIGNING_ALLOWED=NO\  # Archive configuration
-         -archivePath $PWD/build/GithubActionsDemoProject.xcarchive \  # Archive location
-         -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.1'
-      
+          xcodebuild clean build -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 18.1'
+
       
