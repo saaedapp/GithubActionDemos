@@ -2,7 +2,7 @@
 //  Persistence.swift
 //  GithubActionsDemoProject
 //
-//  Created by SOF-DEV-SAEEDHASHIM on 20/01/2025.
+//  Created by SOF-DEV-SAEEDHASHIM on 21/01/2025.
 //
 
 import CoreData
@@ -10,8 +10,7 @@ import CoreData
 struct PersistenceController {
     static let shared = PersistenceController()
 
-    @MainActor
-    static let preview: PersistenceController = {
+    static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
