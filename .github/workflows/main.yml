@@ -1,32 +1,30 @@
-# .github/workflows/ci.yml
-name: iOS CI/CD
+name: iOS Build
 
 on:
   push:
     branches:
-      - main # Trigger on push to main branch (or any branch you prefer)
+      - main
   pull_request:
     branches:
-      - main # Trigger on pull requests to the main branch
+      - main
 
 jobs:
   build:
-    runs-on: macos-latest # This specifies that the job should run on a macOS runner
-    
+    name: Build iOS App
+    runs-on: macos-latest
+
     steps:
-      # Step 1: Checkout the repository
+      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Step 2: Set up Xcode
-      - name: Force Xcode 11
-        run: sudo xcode-select -switch /Applications/Xcode_16.2.app
+      # Set up Xcode
+      - name: Set up Xcode
+        run: xcode-select -p
 
-     
+  
+      # Build the project
+      - name: Build
+        run: xcodebuild -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' clean build
 
-      # Step 4: Build the app
-      - name: Build the app
-        run: |
-          xcodebuild clean build -project GithubActionsDemoProject.xcodeproj -scheme GithubActionsDemoProject -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 18.1'
-
-      
+  
