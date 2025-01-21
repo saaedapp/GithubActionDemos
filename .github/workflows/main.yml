@@ -41,3 +41,5 @@ jobs:
           -sdk iphoneos \
           -configuration Release \
           -allowProvisioningUpdates
+
+    #end jobs
